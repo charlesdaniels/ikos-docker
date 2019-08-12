@@ -8,9 +8,9 @@ RUN echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-7 main" | tee -a
 RUN apt-get update
 RUN apt-get install --yes gcc g++ cmake libgmp-dev libboost-dev libboost-filesystem-dev libboost-test-dev python python-pygments libsqlite3-dev libz-dev libedit-dev llvm-7 llvm-7-dev clang-7
 
-RUN mkdir /tmp/ikos && cd /tmp && git clone --branch v2.1 https://github.com/NASA-SW-VnV/ikos.git && cd /tmp/ikos/
-
-RUN cd /tmp/ikos && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr/local/ -DLLVM_CONFIG_EXECUTABLE="/usr/lib/llvm-7/bin/llvm-config" .. && make && make check && make install
-
-RUN rm -rf /tmp/ikos
+RUN cd /tmp && \
+	git clone --branch v2.1 https://github.com/NASA-SW-VnV/ikos.git && \
+	cd ikos && mkdir build && cd build && \
+	cmake -DCMAKE_INSTALL_PREFIX=/usr/local/ -DLLVM_CONFIG_EXECUTABLE="/usr/lib/llvm-7/bin/llvm-config" .. && \
+	make && make check && make install && rm -rf /tmp/ikos
 
